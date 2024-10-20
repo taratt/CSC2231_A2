@@ -52,7 +52,7 @@ int run_attacker(char *shared_memory) {
         // Find the value of leaked_byte for offset "current_offset"
         // leaked_byte = ??
         init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
-        call_kernel_part1(shared_memory, current_offset)
+        call_kernel_part1(shared_memory, current_offset);
         for (page = 0; page < SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES; page++){
             uint64_t access_time = time_access(shared_memory[page * SHD_SPECTRE_LAB_PAGE_SIZE]);
             if access_time < 160:
