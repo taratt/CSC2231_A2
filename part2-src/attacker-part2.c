@@ -47,7 +47,7 @@ int run_attacker(char *shared_memory) {
         // [Part 2]- Fill this in!
         // leaked_byte = ??
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             call_kernel_part2(shared_memory, 1);
         }
 
