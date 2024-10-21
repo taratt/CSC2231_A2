@@ -49,7 +49,7 @@ int run_attacker(char *shared_memory) {
 
         for (int i = 0; i < 1000; i++) {
             init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
-            call_kernel_part2(shared_memory, 1);
+            call_kernel_part2(shared_memory, 3);
         }
 
         init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
