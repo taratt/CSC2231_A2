@@ -60,7 +60,7 @@ int run_attacker(char *shared_memory) {
             uint64_t access_time = 0;
             int num_tries = 4;
             for (int i = 0; i < num_tries; i++) {
-                new_access = time_access(&shared_memory[page * SHD_SPECTRE_LAB_PAGE_SIZE]);
+                uint64_t new_access = time_access(&shared_memory[page * SHD_SPECTRE_LAB_PAGE_SIZE]);
                 printf("new access time %ld \n", new_access);
                 access_time = access_time + new_access;
             }
