@@ -58,7 +58,7 @@ int run_attacker(char *shared_memory) {
         int page;
         for (page = 0; page < SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES; page++){
             uint64_t access_time = 0;
-            int num_tries = 2;
+            int num_tries = 1;
             for (int i = 0; i < num_tries; i++) {
                 access_time = access_time + time_access(&shared_memory[page * SHD_SPECTRE_LAB_PAGE_SIZE]);
             }
