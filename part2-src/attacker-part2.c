@@ -62,7 +62,7 @@ int run_attacker(char *shared_memory) {
                 access_time = access_time + time_access(&shared_memory[page * SHD_SPECTRE_LAB_PAGE_SIZE]);
             }
             if (access_time/4 < 160) {
-                //printf("access time %ld \n", access_time);
+                printf("access time %ld \n", access_time/4);
                 break;
             }
         }
