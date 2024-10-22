@@ -69,7 +69,7 @@ int run_attacker(char *shared_memory) {
             page_stats[page]++;
 
         }
-        char leaked_byte = '\x00';
+        leaked_byte = '\x00';
         int max = 0;
         for (int p = 0; p < SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES; p++) {
             if (page_stats[p] > max) {
