@@ -67,7 +67,7 @@ int run_attacker(char *shared_memory) {
                     break;
                 }
             }
-            if (current_offset==2){
+            if (current_offset==2 && main==0){
                 current_offset =0;
                 main = 1;
             }
