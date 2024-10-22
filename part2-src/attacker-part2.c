@@ -41,17 +41,17 @@ int run_attacker(char *shared_memory) {
     int num_iterations = 1000;
 
     printf("Launching attacker\n");
-    init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
+
     for (current_offset = 0; current_offset < SHD_SPECTRE_LAB_SECRET_MAX_LEN; current_offset++) {
         char leaked_byte;
         int page_stats[SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES] = {0};
-        init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
 
         // [Part 2]- Fill this in!
         // leaked_byte = ??
         for (int iteration = 0; iteration < num_iterations; iteration++) {
-            init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
+
             for (int i = 0; i < 2000; i++) {
+                init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
                 call_kernel_part2(shared_memory, 0);
             }
 
