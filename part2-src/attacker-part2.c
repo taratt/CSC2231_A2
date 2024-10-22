@@ -67,11 +67,11 @@ int run_attacker(char *shared_memory) {
                     break;
                 }
             }
-//            if (current_offset==2){
-//                current_offset ==0;
-//                main = 1;
-//            }
-//            if (main)
+            if (current_offset==2){
+                current_offset =0;
+                main = 1;
+            }
+            if (main)
                 page_stats[page]++;
 
         }
