@@ -43,6 +43,7 @@ int run_attacker(char *shared_memory) {
     printf("Launching attacker\n");
 
     for (current_offset = 0; current_offset < SHD_SPECTRE_LAB_SECRET_MAX_LEN; current_offset++) {
+        printf("next offset \n");
         char leaked_byte;
         int page_stats[SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES] = {0};
 
