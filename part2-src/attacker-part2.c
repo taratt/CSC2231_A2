@@ -38,7 +38,7 @@ static inline void call_kernel_part2(char *shared_memory, size_t offset) {
 int run_attacker(char *shared_memory) {
     char leaked_str[SHD_SPECTRE_LAB_SECRET_MAX_LEN];
     size_t current_offset = 0;
-    int num_iterations = 1000;
+    int num_iterations = 2000;
 
     printf("Launching attacker\n");
 
