@@ -38,13 +38,14 @@ static inline void call_kernel_part2(char *shared_memory, size_t offset) {
 int run_attacker(char *shared_memory) {
     char leaked_str[SHD_SPECTRE_LAB_SECRET_MAX_LEN];
     size_t current_offset = 0;
-    int num_iterations = 2000;
+    int num_iterations = 1000;
 
     printf("Launching attacker\n");
-
+    init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
     for (current_offset = 0; current_offset < SHD_SPECTRE_LAB_SECRET_MAX_LEN; current_offset++) {
         char leaked_byte;
         int page_stats[SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES] = {0};
+        init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
 
         // [Part 2]- Fill this in!
         // leaked_byte = ??
