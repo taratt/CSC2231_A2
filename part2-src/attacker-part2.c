@@ -51,7 +51,7 @@ int run_attacker(char *shared_memory) {
         bool accessed = 0;
         for (int iteration = 0; iteration < num_iterations; iteration++) {
             init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
-            for (i = 0; i < 1000; i += 4) {
+            for (int i = 0; i < 1000; i += 4) {
                 call_kernel_part2(shared_memory, 0);  // Train with offset 0
                 call_kernel_part2(shared_memory, 1);  // Train with offset 1
                 call_kernel_part2(shared_memory, 2);  // Train with offset 2
