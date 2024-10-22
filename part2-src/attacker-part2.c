@@ -41,7 +41,7 @@ int run_attacker(char *shared_memory) {
     int num_iterations = 1000;
 
     printf("Launching attacker\n");
-
+    bool main = 0;
     for (current_offset = 0; current_offset < SHD_SPECTRE_LAB_SECRET_MAX_LEN; current_offset++) {
         char leaked_byte;
         int page_stats[SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES] = {0};
@@ -67,7 +67,12 @@ int run_attacker(char *shared_memory) {
                     break;
                 }
             }
-            page_stats[page]++;
+            if (current_offset==2){
+                current_offset ==0;
+                main = 1;
+            }
+            if (main)
+                page_stats[page]++;
 
         }
        // printf("==================== \n");
